@@ -3,25 +3,204 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Congreso de Ingenierias - Universidad de León</title>
+  <title>Congreso de Ingenierías - Universidad de León</title>
   <link rel="icon" type="image/png" sizes="16x16" href="icon/16x16.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --udl-verde: #006837;
+      --udl-dorado: #bfa140;
+    }
+
+    /* Req 2: Desplazamiento suave */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Estilos generales */
+    body {
+      font-family: "Segoe UI", sans-serif;
+      animation: fadeInPage 0.8s ease-in-out;
+    }
+
+    @keyframes fadeInPage {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Transición suave entre modos oscuro/claro */
+    body, .card, .accordion-item, .modal-content, .offcanvas, 
+    .bg-body-tertiary, .list-group-item {
+      transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+    
+    .navbar {
+      background-color: var(--udl-verde) !important;
+    }
+
+    .navbar .nav-link, .navbar .navbar-brand {
+      color: white !important;
+      transition: 0.3s;
+    }
+
+    .navbar .nav-link:hover {
+      color: var(--udl-dorado) !important;
+    }
+
+    /* Forzar icono de hamburguesa blanco */
+    .navbar-toggler {
+      border-color: rgba(255, 255, 255, 0.2) !important; 
+    }
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+
+    /* Estilos del menú lateral (Offcanvas) */
+    
+    /* --- Navbar (Desktop) --- */
+    @media (min-width: 992px) { 
+      .navbar-expand-lg .navbar-nav .nav-link {
+        color: white !important;
+      }
+      .navbar-expand-lg .navbar-nav .nav-link:hover {
+        color: var(--udl-dorado) !important;
+      }
+      .navbar-expand-lg .ms-lg-3 #toggleTheme {
+         color: white;
+         border-color: white;
+      }
+       .navbar-expand-lg .ms-lg-3 #toggleTheme:hover {
+         color: #000;
+         background-color: white;
+      }
+    }
+    
+    /* --- Offcanvas (Mobile) --- */
+    .offcanvas {
+      background-color: var(--udl-verde) !important;
+    }
+    .offcanvas-header {
+      border-bottom-color: rgba(255, 255, 255, 0.2);
+    }
+    .offcanvas-title {
+      color: white;
+    }
+    .offcanvas .btn-close {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+      opacity: 0.8;
+    }
+      .offcanvas .btn-close:hover {
+      opacity: 1;
+    }
+    
+    .offcanvas-body .nav-link {
+      color: white !important;
+    }
+    .offcanvas-body .nav-link:hover {
+      color: var(--udl-dorado) !important;
+    }
+    .offcanvas-body #toggleTheme {
+      color: white;
+      border-color: white;
+    }
+    .offcanvas-body #toggleTheme:hover {
+      color: var(--udl-verde);
+      background-color: white;
+    }
+
+    .btn-primary {
+      background-color: var(--udl-verde);
+      border-color: var(--udl-verde);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--udl-dorado);
+      border-color: var(--udl-dorado);
+    }
+
+    .btn-outline-primary:hover {
+      background-color: var(--udl-verde);
+      color: white;
+    }
+
+    /* Tarjetas */
+    .card {
+      transition: transform 0.2s, box-shadow 0.3s, background-color 0.4s ease, color 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0.8rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--udl-verde) !important;
+      color: white;
+    }
+    footer a {
+      color: var(--udl-dorado);
+    }
+    footer a:hover {
+      color: white;
+    }
+    
+    .footer-logos img {
+      height: 30px;
+      margin: 0 0.5rem;
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+    }
+    .footer-logos img[src="icon/IM.png"] {
+      filter: none;
+      opacity: 1;
+    }
+
+    /* Progreso */
+    #progreso {
+      height: 1.5rem;
+    }
+    
+    @media (max-width: 576px) {
+      #hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    /* Icono de contacto flotante */
+    .floating-contact-icon {
+      width: 24px;
+      height: 24px;
+      filter: brightness(0) invert(1);
+    }
+    
+    /* Animación para acordeones */
+    .accordion-collapse.show .accordion-body {
+      animation: fadeInAccordion 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeInAccordion {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+  </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+<nav class="navbar navbar-expand-lg sticky-top shadow">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="#">
-      <img src="icon/UDL_LogotipoColor.png" alt="Logo Universidad de León" class="h-12 w-12 object-contain">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+      <img src="icon/UDL_LogotipoBlanco.png" alt="Logo Universidad de León" height="40">
+      <span>Congreso de Ingenierias</span>
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-controls="mainMenu" aria-label="Abrir menú">
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mainMenu" aria-controls="mainMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenu">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title">Menú</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav ms-auto">
@@ -29,10 +208,12 @@
           <li class="nav-item"><a class="nav-link" href="#charlas">Charlas</a></li>
           <li class="nav-item"><a class="nav-link" href="#agenda">Agenda</a></li>
           <li class="nav-item"><a class="nav-link" href="#speakers">Speakers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#galeria">Galeria</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
           <li class="nav-item"><a class="nav-link" href="#registro">Registro</a></li>
         </ul>
         <div class="ms-lg-3 mt-3 mt-lg-0 d-flex gap-2">
-          <button id="toggleTheme" class="btn btn-outline-secondary btn-sm">Modo oscuro</button>
+          <button id="toggleTheme" class="btn btn-sm">Modo oscuro</button>
         </div>
       </div>
     </div>
@@ -40,30 +221,39 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero" class="py-5 bg-light">
+<section id="hero" class="py-5 bg-body-tertiary">
   <div class="container">
     <div class="row align-items-center g-4">
       <div class="col-12 col-md-6">
-        <h1 class="display-5 fw-bold">5to Congreso de Ingenierias</h1>
-        <p class="lead">Ven y expande tu conocimiento en la Ingenieria. Un lugar donde brindamos experiencia y conocimiento a nuestras Ingenierias con temas y ponentes especializados.</p>
+        <h1 class="display-5 fw-bold text-success">5to Congreso de Ingenierías</h1>
+        <p class="lead">Ven y expande tu conocimiento en la Ingeniería. Un evento que brinda experiencia y conocimiento con ponentes especializados.</p>
         <div class="d-flex gap-2">
           <a href="#registro" class="btn btn-primary">Regístrate</a>
           <a href="#charlas" class="btn btn-outline-primary">Ver charlas</a>
         </div>
       </div>
       <div class="col-12 col-md-6 text-center">
-        <img src="img/foto_segundo_congreso_24.jpeg" class="img-fluid rounded shadow" alt="Ilustración del evento">
+        <img src="img/foto_segundo_congreso_24.jpeg" class="img-fluid rounded shadow-lg" alt="Evento UDL">
       </div>
     </div>
   </div>
 </section>
 
-<!-- CHARLAS (CARDS EN GRID) -->
+<!-- COMPONENTE EXTRA 1: Barra de progreso -->
+<section class="py-4 bg-body-tertiary">
+  <div class="container">
+    <h5 class="mb-2 text-center">Avance de asistencia confirmada</h5>
+    <div class="progress" id="progreso">
+      <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 0%">0% Confirmado</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARLAS -->
 <section id="charlas" class="py-5">
   <div class="container">
-    <h2 class="mb-4">Charlas destacadas <span class="badge text-bg-success">Nuevo</span></h2>
+    <h2 class="mb-4 text-success">Charlas destacadas <span class="badge text-bg-success">Nuevo</span></h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      <!-- Repite esta card con contenido real -->
       <div class="col">
         <div class="card h-100">
           <img src="img/foto_segundo_congreso_37.jpeg" class="card-img-top" alt="Portada charla">
@@ -110,10 +300,10 @@
   </div>
 </section>
 
-<!-- AGENDA (ACCORDION) -->
-<section id="agenda" class="py-5 bg-light">
+<!-- AGENDA -->
+<section id="agenda" class="py-5 bg-body-tertiary">
   <div class="container">
-    <h2 class="mb-4">Agenda</h2>
+    <h2 class="mb-4 text-success">Agenda</h2>
     <div class="accordion" id="agendaAcc">
       <div class="accordion-item">
         <h2 class="accordion-header" id="day1h">
@@ -159,10 +349,10 @@
   </div>
 </section>
 
-<!-- SPEAKERS (LIST O CARDS) -->
+<!-- SPEAKERS -->
 <section id="speakers" class="py-5">
   <div class="container">
-    <h2 class="mb-4">Speakers</h2>
+    <h2 class="mb-4 text-success">Speakers</h2>
     <h4>Conferencias</h4>
     <div class="row g-4">
       <div class="col-12 col-md-6 col-lg-4">
@@ -233,57 +423,177 @@
   </div>
 </section>
 
-<!-- CAROUSEL -->
-<section class="py-5 bg-light">
+<!-- GALERIA -->
+<section id="galeria" class="py-5 bg-body-tertiary">
   <div class="container">
-    <h2 class="mb-4">Galería</h2>
-    <div id="galeria" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner rounded shadow">
-        <div class="carousel-item active">
-          <img src="img/foto_segundo_congreso_1.jpeg" class="d-block w-100" alt="Foto 1">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_14.jpeg" class="d-block w-100" alt="Foto 2">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_10.jpeg" class="d-block w-100" alt="Foto 3">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_16.jpeg" class="d-block w-100" alt="Foto 4">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_20.jpeg" class="d-block w-100" alt="Foto 5">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_2.jpeg" class="d-block w-100" alt="Foto 6">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_19.jpeg" class="d-block w-100" alt="Foto 7">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_26.jpeg" class="d-block w-100" alt="Foto 8">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_30.jpeg" class="d-block w-100" alt="Foto 9">
-        </div>
-        <div class="carousel-item">
-          <img src="img/foto_segundo_congreso_34.jpeg" class="d-block w-100" alt="Foto 10">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10">
+        <h2 class="mb-4 text-center">Galería</h2>
+        <div id="galeriaCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner rounded shadow">
+            <div class="carousel-item active">
+              <img src="img/foto_segundo_congreso_1.jpeg" class="d-block w-100" alt="Foto 1">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_14.jpeg" class="d-block w-100" alt="Foto 2">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_10.jpeg" class="d-block w-100" alt="Foto 3">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_16.jpeg" class="d-block w-100" alt="Foto 4">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_20.jpeg" class="d-block w-100" alt="Foto 5">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_2.jpeg" class="d-block w-100" alt="Foto 6">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_19.jpeg" class="d-block w-100" alt="Foto 7">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_26.jpeg" class="d-block w-100" alt="Foto 8">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_30.jpeg" class="d-block w-100" alt="Foto 9">
+            </div>
+            <div class="carousel-item">
+              <img src="img/foto_segundo_congreso_34.jpeg" class="d-block w-100" alt="Foto 10">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#galeriaCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#galeriaCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span>
+          </button>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#galeria" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#galeria" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Siguiente</span>
-      </button>
     </div>
   </div>
 </section>
 
-<!-- REGISTRO (FORM + VALIDATION + TOAST) -->
+<!-- FAQ -->
+<section id="faq" class="py-5 bg-body-tertiary">
+  <div class="container">
+    <h2 class="mb-4 text-success">Preguntas Frecuentes (FAQ)</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-q1" aria-expanded="false" aria-controls="faq-q1">
+            ¿Qué es el 5to Congreso de Ingenierías?
+          </button>
+        </h2>
+        <div id="faq-q1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Es un evento de la Universidad de León diseñado para expandir tu conocimiento en la Ingeniería. Brinda experiencia y conocimiento a través de ponentes especializados en diversas áreas como IA, robótica, ciberseguridad y más.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-q2" aria-expanded="false" aria-controls="faq-q2">
+            ¿Cómo puedo participar o registrarme?
+          </button>
+        </h2>
+        <div id="faq-q2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            ¡Es muy fácil! Simplemente dirígete a la sección de <a href="#registro" class="fw-bold">Registro</a> en esta misma página, llena el formulario con tu nombre y correo, y envíalo.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-q3" aria-expanded="false" aria-controls="faq-q3">
+            ¿Quiénes son los ponentes?
+          </button>
+        </h2>
+        <div id="faq-q3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Contamos con expertos de alto nivel de empresas como SIEMENS, GUREGO, VIAS 3D, y TECNM-Campus Celaya, entre otros. Puedes ver la lista completa de conferencistas y talleristas en la sección de <a href="#speakers" class="fw-bold">Speakers</a>.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-q4" aria-expanded="false" aria-controls="faq-q4">
+            ¿Cuál es el programa del evento?
+          </button>
+        </h2>
+        <div id="faq-q4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            El evento comienza a las 7:00 con el registro e incluye 3 conferencias magistrales, desayuno, receso, talleres simultáneos y una clausura a las 14:00. Puedes ver el horario detallado en la sección de <a href="#agenda" class="fw-bold">Agenda</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- COMPONENTE EXTRA 2: Botón flotante de contacto -->
+<button type="button" class="btn btn-success position-fixed bottom-0 end-0 m-4 rounded-circle shadow p-3" data-bs-toggle="modal" data-bs-target="#contactoModal" title="Contáctanos">
+  <img src="icon/contactanos.png" alt="Contáctanos" class="floating-contact-icon">
+</button>
+
+<!-- Modal de contacto -->
+<div class="modal fade" id="contactoModal" tabindex="-1" aria-labelledby="contactoModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="contactoModalLabel">Contáctanos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Tienes dudas sobre el evento? Escríbenos y te responderemos.</p>
+        <!-- Req 1: Formulario de contacto con validación -->
+        <form id="contactForm" class="needs-validation-contact" novalidate>
+          <div class="mb-2">
+            <label for="contactName" class="form-label visually-hidden">Nombre</label>
+            <input type="text" class="form-control" id="contactName" placeholder="Tu nombre" required>
+            <div class="invalid-feedback">Ingresa tu nombre.</div>
+          </div>
+          <div class="mb-2">
+            <label for="contactEmail" class="form-label visually-hidden">Correo</label>
+            <input type="email" class="form-control" id="contactEmail" placeholder="Tu correo" required>
+            <div class="invalid-feedback">Ingresa un correo válido.</div>
+          </div>
+          <div class="mb-3">
+             <label for="contactMessage" class="form-label visually-hidden">Mensaje</label>
+            <textarea class="form-control" id="contactMessage" rows="3" placeholder="Tu mensaje" required></textarea>
+            <div class="invalid-feedback">Ingresa tu mensaje.</div>
+          </div>
+          <button class="btn btn-success w-100" type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Req 1: Modal de éxito para contacto -->
+<div class="modal fade" id="contactoExitoModal" tabindex="-1" aria-labelledby="contactoExitoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="contactoExitoModalLabel">Mensaje enviado con éxito</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Gracias por tu mensaje, apreciamos cada detalle de ustedes. Pronto recibira respuesta de nuestro equipo.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- REGISTRO -->
 <section id="registro" class="py-5">
   <div class="container">
-    <h2 class="mb-4">Registro</h2>
+    <h2 class="mb-4 text-success">Registro</h2>
     <form class="row g-3 needs-validation" novalidate>
       <div class="col-md-6">
         <label class="form-label">Nombre</label>
@@ -301,11 +611,11 @@
     </form>
 
     <!-- Toast -->
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div class="position-fixed bottom-0 end-0 p-3">
       <div id="toastOk" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
+        <div class="toast-header bg-success text-white">
           <strong class="me-auto">Registro</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
         </div>
         <div class="toast-body">¡Registro enviado con éxito!</div>
       </div>
@@ -314,19 +624,25 @@
 </section>
 
 <!-- FOOTER -->
-<footer class="py-4 bg-body-tertiary">
+<footer class="py-4">
   <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
     <nav aria-label="breadcrumb" class="mb-2 mb-md-0">
       <ol class="breadcrumb mb-0">
         <li class="breadcrumb-item"><a href="#hero">Inicio</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Registro</li>
+        <li class="breadcrumb-item active text-white" aria-current="page">Registro</li>
       </ol>
     </nav>
-    <small class="text-muted">© 2025 Universida de León</small>
+    
+    <div class="footer-logos my-2 my-md-0">
+      <img src="icon/ICO.png" alt="Logo ICO">
+      <img src="icon/IEI.png" alt="Logo IEI">
+      <img src="icon/IM.png" alt="Logo IM">
+    </div>
+    
+    <small>© 2025 Universidad de León</small>
   </div>
 </footer>
 
-<!-- MODAL DE CHARLA -->
 <div class="modal fade" id="modalCharla" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -340,7 +656,7 @@
             Se analizarán los desafíos de integrar algoritmos inteligentes en redes industriales críticas (como sistemas SCADA o IIoT), los riesgos de ciberataques en fábricas inteligentes, y las estrategias de defensa proactiva basadas en aprendizaje automático.
         Los asistentes aprenderán sobre detección de anomalías mediante IA, mantenimiento predictivo seguro, gestión de datos industriales sensibles
           y estándares internacionales de ciberseguridad.
-            Dirigido especialmente a alumnos interesados en la industria 4.0, automatización, redes industriales y protección digital, esta conferencia ofrece una visión completa de cómo diseñar un futuro industrial inteligente y seguro.
+        Dirigido especialmente a alumnos interesados en la industria 4.0, automatización, redes industriales y protección digital, esta conferencia ofrece una visión completa de cómo diseñar un futuro industrial inteligente y seguro.
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
@@ -358,11 +674,11 @@
       <div class="modal-body">
         Inspekto es una revolución en la inspección visual industrial: una solución de Inteligencia Artificial con ADN 100% industrial,
           diseñada para el control de calidad inteligente en fábricas de todo tipo.
-            Durante la conferencia se explicará el funcionamiento de los sistemas Plug & Inspect®, capaces de aprender por sí mismos el aspecto correcto de un producto en minutos,
+        Durante la conferencia se explicará el funcionamiento de los sistemas Plug & Inspect®, capaces de aprender por sí mismos el aspecto correcto de un producto en minutos,
               sin necesidad de grandes bases de datos o entrenamiento prolongado.
         El ponente mostrará casos reales de aplicación en sectores electrónicos, automotrices y de manufactura avanzada,
           donde Inspekto ha reducido drásticamente tiempos de inspección y aumentado la fiabilidad del proceso productivo.
-            Ideal para alumnos de Ingeniería en Computación, Electrónica Industrial y Mecatrónica, que deseen comprender cómo la IA está revolucionando la visión artificial,
+        Ideal para alumnos de Ingeniería en Computación, Electrónica Industrial y Mecatrónica, que deseen comprender cómo la IA está revolucionando la visión artificial,
               la calidad automatizada y la autonomía de las máquinas industriales.
       </div>
       <div class="modal-footer">
@@ -380,7 +696,7 @@
       </div>
       <div class="modal-body">
         La conferencia sobre Robots Colaborativos (Cobots) aborda una de las tendencias más transformadoras de la manufactura moderna.
-          A diferencia de los robots tradicionales, los cobots están pensados para colaborar directamente con los operarios, sin necesidad de jaulas de seguridad,
+        A diferencia de los robots tradicionales, los cobots están pensados para colaborar directamente con los operarios, sin necesidad de jaulas de seguridad,
             ofreciendo una automatización adaptable y segura.
         Durante la sesión se explorarán temas como:
         - Diseño mecatrónico y sensores de fuerza que permiten la interacción segura.
@@ -397,33 +713,95 @@
   </div>
 </div>
 
-<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-// Validación Bootstrap + toast
-(() => {
-  const form = document.querySelector('.needs-validation');
+document.addEventListener('DOMContentLoaded', () => {
+  // --- Animación Barra de Progreso ---
+  const progressBar = document.querySelector('#progreso .progress-bar');
+  if (progressBar) {
+    const targetWidth = 70;
+    setTimeout(() => {
+       progressBar.style.transition = 'width 1.5s ease-out';
+      progressBar.style.width = targetWidth + '%';
+      progressBar.textContent = targetWidth + '% Confirmado';
+    }, 500); 
+  }
+
+  // --- Req 2: Desplazamiento Suave (Smooth Scroll) ---
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href.length > 1) { 
+        e.preventDefault();
+        const targetId = href;
+        const targetElement = document.querySelector(targetId);
+        
+        if(targetElement) {
+          const offcanvasElement = document.getElementById('mainMenu');
+          if (offcanvasElement.classList.contains('show')) {
+            const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+            if (offcanvas) {
+              offcanvas.hide();
+              setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+              }, 300);
+            }
+          } else {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+    });
+  });
+
+  // --- Validación Formulario de Registro (Toast) ---
+  const registrationForm = document.querySelector('.needs-validation');
   const toastEl = document.getElementById('toastOk');
   const toast = toastEl ? new bootstrap.Toast(toastEl) : null;
 
-  form?.addEventListener('submit', (e) => {
+  registrationForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (!form.checkValidity()) {
+    if (!registrationForm.checkValidity()) {
       e.stopPropagation();
     } else {
       toast?.show();
-      form.reset();
-      form.classList.remove('was-validated');
+      registrationForm.reset();
+      registrationForm.classList.remove('was-validated');
       return;
     }
-    form.classList.add('was-validated');
+    registrationForm.classList.add('was-validated');
   });
 
-  // Toggle dark / light
+  // --- Req 1: Validación Formulario de Contacto (Modal) ---
+  const contactForm = document.querySelector('.needs-validation-contact');
+  const contactModalEl = document.getElementById('contactoModal');
+  const contactModal = contactModalEl ? new bootstrap.Modal(contactModalEl) : null;
+  const successModalEl = document.getElementById('contactoExitoModal');
+  const successModal = successModalEl ? new bootstrap.Modal(successModalEl) : null;
+
+  contactForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!contactForm.checkValidity()) {
+      e.stopPropagation();
+    } else {
+      contactModal?.hide();
+      successModal?.show();
+      contactForm.reset();
+      contactForm.classList.remove('was-validated');
+      return;
+    }
+    contactForm.classList.add('was-validated');
+  });
+
+  // --- Control de Tema Oscuro/Claro ---
   const btnTheme = document.getElementById('toggleTheme');
   btnTheme?.addEventListener('click', () => {
     const html = document.documentElement;
-    html.setAttribute('data-bs-theme', html.getAttribute('data-bs-theme') === 'light' ? 'dark' : 'light');
+    const isLight = html.getAttribute('data-bs-theme') === 'light';
+    html.setAttribute('data-bs-theme', isLight ? 'dark' : 'light');
+    btnTheme.textContent = isLight ? 'Modo claro' : 'Modo oscuro';
   });
+  
 })();
 </script>
 </body>
